@@ -1,17 +1,28 @@
 import React from 'react';
 
-class Application extends React.Component{
+class Application extends React.Component
+{
     constructor(props)
-    {super(props);
+    {super();
 
     this.state ={
-        count :0
+        count :0,
+        overTen: false
     }
 }
 
-handleClick=() =>
+handleClick =() =>
 {
     this.setState({count: this.state.count + 1});
+
+}
+
+componentDidUpdate(props,state)
+{ if(this.state.count >10 && this.state.count !== state.count && !this.state.overTen)
+    {
+        console.log("Updating over ten");
+    this.setState({overTen: true})
+    }
 }
 
 render(){
@@ -19,8 +30,13 @@ render(){
     return(
         <div>
             <h1> You the button {count} times</h1>
+            {(this.state.overTen)?
+                    <h2>Beat score of 10</h2>
+            :null
+            }
+
             <span>
-                <button onClick={() => this.handleClick}>Click</button>
+                <button onClick={this.handleClick}>Click</button>
             </span>
         </div>
 
